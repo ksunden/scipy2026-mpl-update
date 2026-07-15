@@ -24,6 +24,50 @@ FONT = None
 FIGSIZE = (19.2, 10.8)
 #: The DPI of a slide figure.
 DPI = 100
+#: Syle arguments for code snippets
+CODE = dict(fontfamily='monospace', fontsize=32, verticalalignment='top',
+            alpha=0.7)
+
+
+def bullet_level1(fig, y, text):
+    """
+    Create a level 1 list item.
+
+    Parameters
+    ----------
+    fig : matplotlib.figure.Figure
+        A slide figure.
+    y : float
+        The vertical position for the list item, in 0-1 figure space.
+    text : str
+        The text to place in the list item.
+    """
+    return fig.text(0.05, y, text,
+                    fontproperties=FONT, fontsize=48, alpha=0.7,
+                    verticalalignment='top')
+
+
+def bullet_level2(fig, y, text, **kwargs):
+    """
+    Create a level 2 list item.
+
+    This is roughly the same as level 1, but not bolded, and indented more.
+
+    Parameters
+    ----------
+    fig : matplotlib.figure.Figure
+        A slide figure.
+    y : float
+        The vertical position for the list item, in 0-1 figure space.
+    text : str
+        The text to place in the list item.
+    """
+    return fig.text(0.1, y, text,
+                    **{'fontproperties': FONT, 'fontsize': 48, 'fontweight': 'normal',
+                       'alpha': 0.7, 'verticalalignment': 'top', **kwargs})
+
+
+
 
 
 def check_requirements():
@@ -165,3 +209,33 @@ def add_qrcode(fig, url, location):
     img = Image.open(out).convert('RGB')
     ax = fig.add_axes(location, frameon=False, xticks=[], yticks=[])
     ax.imshow(img)
+
+
+def add_quine(fig, file, location):
+    from pygments import highlight
+    from pygments.lexers import PythonLexer
+    from pygments.formatters import ImageFormatter
+
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import PIL.Image
+
+    with open("../qcode.png", "wb") as fout, open(file) as fin:
+        fout.write(
+            highlight(
+                fin.read(),
+                PythonLexer(),
+                ImageFormatter(
+                    font_name="xkcd Script",
+                    line_numbers=False,
+                    style="dracula",
+                    font_size=50,
+                ),
+            )
+        )
+
+    with PIL.Image.open("../qcode.png") as im:
+        code_img = np.array(im)
+
+    ax = fig.add_axes(location, frameon=False, xticks=[], yticks=[])
+    ax.imshow(code_img)

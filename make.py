@@ -21,24 +21,24 @@ check_requirements()  # noqa: F402
 
 from title import create_icon_axes, slides as title_slides
 from timeline import slides as history_slides
-from feature38 import slides as feature38_slides
-from feature39 import slides as feature39_slides
-from feature310 import slides as feature310_slides
+from feature311 import slides as feature311_slides
+from feature312 import slides as feature312_slides
+from get_involved import slides as get_involved_slides
 from end import slides as end_slides
 
 
 METADATA = {
-    'Author': 'Elliott Sales de Andrade',
-    'Title': 'Matplotlib Project Update for SciPy 2024',
+    'Author': 'Kyle Sunden',
+    'Title': 'Matplotlib Project Update for SciPy 2026',
 }
 MPL_PATH = sys.argv[1]
 PAGES = [
     # Tuple of function + any arguments.
     (title_slides, ),
     (history_slides, MPL_PATH, ),
-    (feature38_slides, ),
-    (feature39_slides, ),
-    (feature310_slides, ),
+    (feature311_slides, ),
+    (feature312_slides, ),
+    (get_involved_slides, ),
     (end_slides, ),
 ]
 
@@ -48,6 +48,7 @@ with PdfPages('slides.pdf', metadata=METADATA) as pdf:
         if not isinstance(figs, (tuple, list)):
             figs = (figs, )
         for fig in figs:
+            print("Slide made")
             if not fig.mplslide_props['plain']:
                 create_icon_axes(fig, (0.825, 0.825, 0.2, 0.15),
                                  0.3, 0.3, 0.3, [5])

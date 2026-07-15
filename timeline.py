@@ -95,8 +95,8 @@ def slides(mpl_path):
 
     ax.margins(y=0.1)
 
-    this_scipy = datetime(2024, 7, 10)
-    last_scipy = datetime(2023, 7, 12)
+    this_scipy = datetime(2026, 7, 15)
+    last_scipy = datetime(2025, 7, 12)
 
     # Annotate range between last SciPy and this SciPy.
     ax.axvspan(last_scipy, this_scipy, alpha=0.5)
